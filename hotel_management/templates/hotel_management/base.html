@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Management Dashboard</title>
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --primary: #2563EB;
+            --secondary: #1E293B;
+            --accent: #14B8A6;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --background: #F8FAFC;
+            --radius: 12px;
+            --card-radius: 16px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
+            color: var(--secondary);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;
+            font-weight: 500;
+        }
+        .nav-link {
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border-radius: var(--radius);
+            padding: 8px 16px !important;
+            margin: 0 4px;
+        }
+        .nav-link:hover, .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Card Layouts */
+        .card {
+            border: none;
+            border-radius: var(--card-radius);
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 24px;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        /* Buttons */
+        .btn-modern {
+            border-radius: var(--radius);
+            padding: 10px 24px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+        }
+        .btn-primary-custom {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+        }
+        .btn-primary-custom:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+            color: white;
+        }
+        .btn-danger-custom {
+            background-color: var(--danger);
+            color: white;
+            border: none;
+        }
+        .btn-danger-custom:hover {
+            background-color: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(239, 68, 68, 0.3);
+            color: white;
+        }
+
+        /* Forms */
+        .form-floating label {
+            color: #64748b;
+        }
+        .form-control, .form-select {
+            border-radius: var(--radius);
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.6s ease-in-out;
+        }
+        .slide-up {
+            animation: slideUp 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Tables & Badges */
+        .table {
+            vertical-align: middle;
+        }
+        .badge-success { background-color: var(--success); }
+        .badge-danger { background-color: var(--danger); }
+        .badge-warning { background-color: var(--warning); color: #000; }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            background: white;
+            color: var(--secondary);
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}"><i class="bi bi-building"></i> Hotel SaaS</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-link"><a class="nav-link" href="{% url 'home' %}">Dashboard</a></li>
+                <li class="nav-link"><a class="nav-link" href="{% url 'book_room' %}">Book Room</a></li>
+                <li class="nav-link"><a class="nav-link" href="{% url 'available_rooms' %}">Rooms</a></li>
+                <li class="nav-link"><a class="nav-link" href="{% url 'waiting_list' %}">Queue</a></li>
+                <li class="nav-link"><a class="nav-link" href="{% url 'reservation_history' %}">History</a></li>
+                <li class="nav-link"><a class="nav-link" href="{% url 'search_reservation' %}"><i class="bi bi-search"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container my-5 flex-grow-1 fade-in">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <p class="mb-0">&copy; {% now "Y" %} Hotel Management System. Built for Lab Project.</p>
+        <small class="text-muted"><i class="bi bi-github"></i> Medha Trust</small>
+    </div>
+</footer>
+
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

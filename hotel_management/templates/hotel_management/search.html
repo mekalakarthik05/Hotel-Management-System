@@ -1,0 +1,56 @@
+{% extends 'hotel_management/base.html' %}
+
+{% block content %}
+<div class="slide-up">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card p-5 text-center">
+                <h3 class="mb-4"><i class="bi bi-search text-primary"></i> Search Reservation</h3>
+                
+                <form action="{% url 'search_reservation' %}" method="GET" class="mb-4">
+                    <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden">
+                        <input type="text" name="q" class="form-control border-0 px-4" placeholder="Enter Customer Name or Contact Number" value="{{ query }}">
+                        <button class="btn btn-primary-custom px-4 border-0" type="submit"><i class="bi bi-search"></i> Search</button>
+                    </div>
+                </form>
+
+                {% if query %}
+                    <h5 class="text-start mb-3">Search Results for "{{ query }}"</h5>
+                    {% if results %}
+                        <div class="table-responsive text-start">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Customer</th>
+                                        <th>Contact</th>
+                                        <th>Room</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for res in results %}
+                                    <tr>
+                                        <td><strong>{{ res.customer_name }}</strong></td>
+                                        <td>{{ res.contact_number }}</td>
+                                        <td>Room {{ res.room.room_number }}</td>
+                                        <td>
+                                            {% if res.check_out %}
+                                                <span class="badge badge-success">Completed</span>
+                                            {% else %}
+                                                <span class="badge badge-warning">Active</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="text-muted text-start"><i class="bi bi-emoji-frown"></i> No reservations found matching your query.</p>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
